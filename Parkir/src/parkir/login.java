@@ -10,7 +10,34 @@ public class login extends javax.swing.JFrame {
     public login() {
         initComponents();
     }
-
+public void login(String a, String b){
+      
+        try{
+         Statement statement= (Statement) conek.GetConnection().createStatement();
+         ResultSet res=statement.executeQuery("select * from tbl_login where idpetugas= '"+jTextField1.getText()+"'");
+         if(res.next()){
+             if (jPasswordField1.getText().equals(res.getString("password"))){           
+                 
+                 new Menu().show();
+                 this.dispose();
+                 }else{
+                 JOptionPane.showMessageDialog(rootPane, "Password Salah");
+                 jPasswordField1.setText("");
+                 jPasswordField1.requestFocus();
+             }
+       
+         }else {
+            JOptionPane.showMessageDialog(rootPane, "Username tidak ada");
+            jTextField1.setText("");
+            jPasswordField1.setText("");
+            jTextField1.requestFocus();
+         }
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(rootPane, "gagal");
+        }
+       a =jTextField1.getText();
+       b= jPasswordField1.getText();
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -26,6 +53,7 @@ public class login extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(102, 255, 255));
 
@@ -44,6 +72,12 @@ public class login extends javax.swing.JFrame {
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
+            }
+        });
+
+        jPasswordField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordField1ActionPerformed(evt);
             }
         });
 
@@ -103,22 +137,7 @@ public class login extends javax.swing.JFrame {
                 .addGap(14, 14, 14))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -130,34 +149,12 @@ public class login extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        try{
-         Statement statement= (Statement) conek.GetConnection().createStatement();
-         ResultSet res=statement.executeQuery("select * from tbl_login where idpetugas= '"+jTextField1.getText()+"'");
-         if(res.next()){
-             if(jPasswordField1.getText().equals(res.getString("password"))){           
-           
-                 new Menu().show();
-                 this.dispose();
-                 }else{
-                 JOptionPane.showMessageDialog(rootPane, "Password Salah");
-                 jPasswordField1.setText("");
-                 jPasswordField1.requestFocus();
-             }
-       
-         }else {
-            JOptionPane.showMessageDialog(rootPane, "Username tidak ada");
-            jTextField1.setText("");
-            jPasswordField1.setText("");
-            jTextField1.requestFocus();
-         }
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(rootPane, "gagal");
-        }
-            Kkeluar ck = new Kkeluar();
-            Kkeluar.jTextField5.setText(this.jTextField1.getText());
-            Kmasuk kk= new Kmasuk(); 
-            kk.jTextField3.setText(this.jTextField1.getText());
+        login("","");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jPasswordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordField1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -202,7 +199,11 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPasswordField jPasswordField1;
+    public static javax.swing.JPasswordField jPasswordField1;
     public static javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+
+
+
+
 }

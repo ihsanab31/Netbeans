@@ -38,7 +38,9 @@ public class Kmasuk extends javax.swing.JFrame {
        tampiljenis();
        jTextField5.setText("A");
        kuota();
-       jTextField2.setEnabled(false);
+       lahan();
+       lahan1(1,0);
+        jTextField2.setEnabled(false);
        jTextField3.setEnabled(false);
        jTextField4.setEnabled(false);
        jTextField5.setEnabled(false);
@@ -107,9 +109,10 @@ public void BersihData(){
         public void SetEditOn(){
         jTextField1.setEnabled(true);
         }
-    public void lahan1(){
-        int c= Integer.parseInt(jTextField4.getText())-1;
-      try {
+    public void lahan1(int c, int d){
+        d= 1;
+        c= Integer.parseInt(jTextField4.getText())-d;
+            try {
               Statement statement= (Statement) conek.GetConnection().createStatement();
               statement.executeUpdate("update kuota set kouta='"+c+"'where id='"+jTextField5.getText()+"'");
               statement.close();
@@ -160,6 +163,7 @@ public void BersihData(){
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kendaraan Masuk");
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(153, 255, 255));
 
@@ -341,18 +345,7 @@ public void BersihData(){
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -382,10 +375,10 @@ public void BersihData(){
         String T=jTextField3.getText();
         int kuota= Integer.parseInt(jTextField4.getText());
         String IDP=jComboBox1.getSelectedItem().toString();
-        if(kuota<0){
-        JOptionPane.showMessageDialog(null, "Kouta Parkir Sudah Habis");
-        }
-        else{       
+        //if(kuota<0){
+        //JOptionPane.showMessageDialog(null, "Kouta Parkir Sudah Habis");
+        //}
+        {       
         if ((KJ.isEmpty()) | (J.isEmpty()) |(T.isEmpty()))
             {JOptionPane.showMessageDialog(null,"data tidak boleh kosong, silahkan dilengkapi");
             jTextField1.requestFocus();
@@ -396,13 +389,14 @@ public void BersihData(){
               + "jmask='"+jTextField2.getText()+"', idpetugas='"+jTextField3.getText()+"', "
               + "kodejenis='"+IDP+"'");
               statement.close();
+              lahan1(1, 0);
               JOptionPane.showMessageDialog(null, "berhasil disimpan");
             }
             catch(Exception t){
                  JOptionPane.showMessageDialog(null, "gagal disimpan");
             }
             BersihData();
-            lahan1();
+            
             kuota();
         }
         }
@@ -417,9 +411,15 @@ public void BersihData(){
         String KJ=jTextField1.getText();
         String J=jTextField2.getText();
         String T=jTextField3.getText();
-         try {
+        if ((KJ.isEmpty()) | (J.isEmpty()) |(T.isEmpty()))
+            {JOptionPane.showMessageDialog(null,"data tidak boleh kosong, silahkan dilengkapi");
+            jTextField1.requestFocus();
+            }
+        else{ 
+            try {
               Statement statement= (Statement) conek.GetConnection().createStatement();
               statement.executeUpdate("DELETE from km where nplat=('"+jTextField1.getText()+"');");
+              lahan();
               JOptionPane.showMessageDialog(null, "berhasil dihapus");
                 jTextField1.setText("");
                 jTextField1.requestFocus();
@@ -427,7 +427,7 @@ public void BersihData(){
             catch(Exception t){
                  JOptionPane.showMessageDialog(null, "gagal dihapus");
             }
-         lahan();
+        }
          kuota();
     }//GEN-LAST:event_jButton3ActionPerformed
 
